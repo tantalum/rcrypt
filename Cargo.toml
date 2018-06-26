@@ -1,0 +1,12 @@
+[package]
+name = "rcrypt"
+version = "0.1.0"
+authors = ["Nabil Alsharif <NAlsharif@Shelterinsurance.com>"]
+
+[dependencies]
+rust-crypto = "0.2.36"
+rustc-serialize = "0.3"
+
+[[bin]]
+name = "rhash"
+path = "src/rhash.rs"
