@@ -82,3 +82,22 @@ fn main() {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::FileReader;
+    use super::calculate_hash;
+
+    use std::boxed::Box;
+    use rustc_serialize::hex::ToHex;
+
+    #[test]
+    fn hash_hello() {
+        let hello = "Hello, World".as_bytes();
+        let mut freader = FileReader{reader: Box::new(hello), filename: "hello.txt".to_string()};
+        match calculate_hash(&mut freader) {
+            Ok(fhash) => {assert_eq!(&fhash.hash[..].to_hex(), "03675ac53ff9cd1535ccc7dfcdfa2c458c5218371f418dc136f2d19ac1fbe8a5")}
+            Err(err) => {panic!("Hash should have completed successfully: {}", err)}
+        }
+    }
+}
