@@ -91,13 +91,30 @@ mod tests {
     use std::boxed::Box;
     use rustc_serialize::hex::ToHex;
 
-    #[test]
-    fn hash_hello() {
-        let hello = "Hello, World".as_bytes();
-        let mut freader = FileReader{reader: Box::new(hello), filename: "hello.txt".to_string()};
+    fn assert_hash(value: &'static str, expected_hash: &str) {
+        let value_bytes = value.as_bytes();
+        let mut freader = FileReader {
+            reader: Box::new(value_bytes),
+            filename: "test.txt".to_string()
+        };
         match calculate_hash(&mut freader) {
-            Ok(fhash) => {assert_eq!(&fhash.hash[..].to_hex(), "03675ac53ff9cd1535ccc7dfcdfa2c458c5218371f418dc136f2d19ac1fbe8a5")}
+            Ok(fhash) => {assert_eq!(&fhash.hash[..].to_hex(), expected_hash)}
             Err(err) => {panic!("Hash should have completed successfully: {}", err)}
         }
+    }
+
+    #[test]
+    fn hash_hello() {
+        assert_hash("Hello, World", "03675ac53ff9cd1535ccc7dfcdfa2c458c5218371f418dc136f2d19ac1fbe8a5");
+    }
+    
+    #[test]
+    fn hash_hello_hash() {
+        assert_hash("03675ac53ff9cd1535ccc7dfcdfa2c458c5218371f418dc136f2d19ac1fbe8a5", "7a9fe01e98ba53e25bc7e78993d000bee0d83dbfa9d2a273a3a444912281c8ba");
+    }
+
+    #[test]
+    fn hash_hello_nl() {
+        assert_hash("Hello, World\n", "8663bab6d124806b9727f89bb4ab9db4cbcc3862f6bbf22024dfa7212aa4ab7d");
     }
 }
