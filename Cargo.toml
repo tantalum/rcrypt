@@ -1,7 +1,7 @@
 [package]
 name = "rcrypt"
 version = "0.1.0"
-authors = ["Nabil Alsharif <NAlsharif@Shelterinsurance.com>"]
+authors = ["blit32 <blit32@circuitsofimagination.com>"]
 
 [dependencies]
 rust-crypto = "0.2.36"
